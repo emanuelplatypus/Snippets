@@ -2,8 +2,8 @@
 	{
 		//Log salvo em algum arquivo: printStreamToFile
 		//Log no console: System.out
-		String fileName = this.getClass().getSimpleName();
-		File file = new File(fileName+"_log.txt");
+		String fileName = this.getClass().getSimpleName()+"_log.txt";
+		File file = new File(fileName);
         PrintStream printStreamToFile = new PrintStream(file);        
         if ( tipo.equals("log") )
            System.setOut(printStreamToFile);
