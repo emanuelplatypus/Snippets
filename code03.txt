@@ -1,8 +1,18 @@
-void criarArquivo(String novoLocal) throws FileNotFoundException {
-				
+package com;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+
+public class CriarArqSaida {//Classe auxiliar
+	
+	void criarArqSaida(String novoLocal) throws FileNotFoundException {
+		
 		File file = new File(novoLocal);
 		PrintStream printStreamToFile = new PrintStream(file);
 		System.setOut(printStreamToFile);
 		printStreamToFile = null;
 		file = null;
 	}
+
+}
