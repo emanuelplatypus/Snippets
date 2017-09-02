@@ -1,0 +1,13 @@
+	static void saidaPadrao(String fileName, String tipo) throws FileNotFoundException
+	{
+		//Log salvo em algum arquivo: printStreamToFile
+		//Log no console: System.out 
+		File file = new File(fileName+"_log.txt");
+        PrintStream printStreamToFile = new PrintStream(file);        
+        if ( tipo.equals("log") )
+           System.setOut(printStreamToFile);
+        else if ( tipo.equals("console") )
+        	System.setOut(System.out);        
+        printStreamToFile = null;
+        file = null;
+	}
