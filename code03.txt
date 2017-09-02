@@ -1,0 +1,9 @@
+  String content = "";
+  try(FileWriter fw = new FileWriter(file, true);
+  	    BufferedWriter bw = new BufferedWriter(fw);
+  	    PrintWriter out = new PrintWriter(bw))
+  	{
+  	    out.println(content);
+  	} catch (IOException e) {
+  	    //exception handling left as an exercise for the reader
+  	}
