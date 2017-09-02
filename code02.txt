@@ -1,6 +1,5 @@
 	void printMe()
 	{
 		String id = this.getClass().getSimpleName()+" "+new Date();
-		System.out.println(id);
-		
+		System.out.println(id);		
 	}
