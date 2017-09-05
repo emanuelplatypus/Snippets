@@ -1,0 +1,89 @@
+package com;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+//site: http://www.dias-uteis.com/dias_utis_ano_2017.htm
+
+public class DeleteCertainStrings {
+
+	void saidaPadrao(String tipo) throws FileNotFoundException {
+		//Log salvo em algum arquivo: printStreamToFile
+		//Log no console: System.out
+		String fileName = this.getClass().getSimpleName() + "_log.txt";
+		File file = new File(fileName);
+		PrintStream printStreamToFile = new PrintStream(file);
+		if (tipo.equals("log")) System.setOut(printStreamToFile);
+		else if (tipo.equals("console")) System.setOut(System.out);
+		printStreamToFile = null;
+		file = null;
+	}
+
+	public static void main(String[] args) throws IOException {
+
+		new DeleteCertainStrings().saidaPadrao("console");
+		File file = new File("diasUteis.txt");
+		file.delete();
+		file = new File("diasUteis.txt");
+		File f = new File("data.txt");
+		String readLine = "";
+		String regex = "0(?=[0-3][0-9] )";
+		String subst = "";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = null;
+		BufferedReader b = null;
+		new CriarArqSaida().criarArqSaida("diasUteis.txt");
+		
+		String anterior = "\"--- Primeira Linha ---\"";
+
+		try {
+
+			b = new BufferedReader(new FileReader(f));
+
+			while ((readLine = b.readLine()) != null) {
+				if (readLine.contains("<div id=childcell class=info> <strong>") && readLine.contains("Dia útil")) {
+
+					readLine = readLine.replaceAll("		<", "<");
+					readLine = readLine.replaceAll("<div id=childcell class=info> <strong>", "");
+					readLine = readLine.replaceAll("</strong> <br> <br>Dia útil <br></div>", "");
+					readLine = readLine.replaceAll("[\\S]+-feira, ", "0");
+					readLine = readLine.replaceAll(",", "");
+					readLine = readLine.trim();
+					readLine = readLine.replaceAll("Janeiro", "01");
+					readLine = readLine.replaceAll("Fevereiro", "02");
+					readLine = readLine.replaceAll("Março", "03");
+					readLine = readLine.replaceAll("Abril", "04");
+					readLine = readLine.replaceAll("Maio", "05");
+					readLine = readLine.replaceAll("Junho", "06");
+					readLine = readLine.replaceAll("Julho", "07");
+					readLine = readLine.replaceAll("Agosto", "08");
+					readLine = readLine.replaceAll("Setembro", "09");
+					readLine = readLine.replaceAll("Outubro", "10");
+					readLine = readLine.replaceAll("Novembro", "11");
+					readLine = readLine.replaceAll("Dezembro", "12");
+					matcher = pattern.matcher(readLine);
+					readLine = matcher.replaceFirst(subst);
+					readLine = readLine.replaceAll(" ", "");
+					readLine = "#"+readLine+"#";
+					readLine = readLine.replaceAll("#", "\"");
+					System.out.print("hmap.put(" + readLine + ",");
+					System.out.println(anterior + ");");
+					anterior = readLine;
+
+				}
+			}
+			b.close();
+
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+}
